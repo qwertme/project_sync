@@ -1,0 +1,18 @@
+{
+  "name": "project_sync",
+  "version": "1.0.0",
+  "description": "Sync Omnifocus with Trello",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Eric di Domenico",
+  "license": "MIT",
+
+  "bin": {
+    "projct_sync": "./bin/project_sync"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  }
+}
