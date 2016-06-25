@@ -8,11 +8,11 @@
   },
   "author": "Eric di Domenico",
   "license": "MIT",
-
   "bin": {
     "projct_sync": "./bin/project_sync"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.5.3"
   }
 }
