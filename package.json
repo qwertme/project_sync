@@ -8,11 +8,14 @@
   },
   "author": "Eric di Domenico",
   "license": "MIT",
-  "bin": {
-    "projct_sync": "./bin/project_sync"
-  },
+
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
+  },
+  "dependencies": {
+    "node-trello": "^1.1.2",
+    "osa": "^2.4.0"
   }
 }
