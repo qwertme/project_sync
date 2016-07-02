@@ -11,7 +11,7 @@ describe('Trello connector', function() {
     var Trello = require('node-trello')
     var trello = new Trello(process.env.TRELLO_DEVELOPER_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
 
-    trello.get('/1/member/qwertme/boards', { 'filter':'open', 'fields':'id,name'}, function(err, expectedBoards) {
+    trello.get('/1/member/' + process.env.TRELLO_USER + '/boards', { 'filter':'open', 'fields':'id,name'}, function(err, expectedBoards) {
       if(err) {
         console.log(err)
         throw err
