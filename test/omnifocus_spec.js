@@ -32,4 +32,36 @@ describe('Omnifocus connector', function() {
       })
     })
   })
+
+  it('should list tasks', function(done) {
+    connector.projects(function(err, projects) {
+      var project = projects[Object.keys(projects)[0]]
+      connector.tasks(project, function(err, tasks) {
+        osa(function(project){
+          var of = Application('OmniFocus')
+          var doc = of.defaultDocument
+
+          var project = doc.flattenedProjects.whose({ id: project.id })[0]
+          var tasks = project.rootTask.flattenedTasks
+
+          var result = []
+          for(i = 0; i < tasks.length; i++) {
+            var task = tasks[i]
+            result[i] = {
+              id: task.id(),
+              done: task.completed(),
+              name: task.name()
+            }
+          }
+
+          return result
+        }, project,
+        function(err, expectedTasks, log){
+          if(err) console.log(err)
+          expect(tasks).to.deep.equal(expectedTasks)
+          done()
+        })
+      })
+    })
+  })
 })
