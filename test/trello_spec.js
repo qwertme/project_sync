@@ -1,3 +1,5 @@
+"use strict"
+
 var expect = require('chai').expect
 
 var connector = require('../lib/trello')
@@ -19,6 +21,41 @@ describe('Trello connector', function() {
       connector.projects(function(err, boards){
         expect(boards).to.deep.equal(connector.parse(expectedBoards))
         done()
+      })
+    })
+  })
+
+  it('should list cards on board', function(done) {
+    var Trello = require('node-trello')
+    var trello = new Trello(process.env.TRELLO_DEVELOPER_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
+
+    connector.projects(function(err, projects) {
+      var project = projects[Object.keys(projects)[0]]
+      trello.get('/1/boards/' + project.id + '/lists', { 'cards': 'all', 'card_fields': 'id,name'}, function(err, lists) {
+        if(err) {
+          console.log(err)
+          throw err
+        }
+        var expectedCards = []
+        var k = 0
+        for(var i = 0; i < lists.length; i++) {
+          var list = lists[i]
+
+          var cards = list.cards
+          for(var j = 0; j < cards.length; j++) {
+            var card = cards[j]
+            expectedCards[k] = {
+              id: card.id,
+              name: card.name,
+              completed: list.name === 'Done'
+            }
+            k++
+          }
+        }
+        connector.tasks(project, function(err, tasks){
+          expect(tasks).to.deep.equal(expectedCards)
+          done()
+        })
       })
     })
   })
